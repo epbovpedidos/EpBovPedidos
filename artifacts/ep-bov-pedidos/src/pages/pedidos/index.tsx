@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "wouter";
-import { useListOrders, useDeleteOrder, getListOrdersQueryKey } from "@workspace/api-client-react";
+import { useListOrders, useDeleteOrder, getListOrdersQueryKey, getOrder } from "@workspace/api-client-react";
+import { shareOrderPDFViaWhatsApp } from "@/lib/pdf-generator";
 import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -60,9 +61,24 @@ export default function PedidosList() {
     });
   };
 
-  const handleWhatsApp = (order: any) => {
-    const text = encodeURIComponent(`*PEDIDO DE COMPRA DE BOVINOS - EP BOV*\n\nPedido N°: ${order.numero}\nData: ${formatDate(order.dataEmissao)}\nComprador: ${order.compradorNome}\nVendedor: ${order.vendedorNome}\nTotal Animais: ${order.totalAnimais}\n\nObrigado pela preferência!`);
-    window.open(`https://wa.me/?text=${text}`, '_blank');
+  const handleWhatsApp = async (orderSummary: any) => {
+    try {
+      const fullOrder = await getOrder(orderSummary.id);
+      const result = await shareOrderPDFViaWhatsApp(
+        fullOrder,
+        fullOrder.comprador,
+        fullOrder.vendedor
+      );
+      if (result === "downloaded-fallback") {
+        toast({
+          title: "PDF baixado",
+          description: "Anexe o arquivo PDF baixado na conversa do WhatsApp.",
+        });
+      }
+    } catch (e) {
+      toast({ title: "Erro ao compartilhar pelo WhatsApp", variant: "destructive" });
+      console.error(e);
+    }
   };
 
   return (

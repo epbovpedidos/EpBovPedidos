@@ -25,7 +25,7 @@ import { useToast } from "@/hooks/use-toast";
 import { ArrowLeft, Save, Loader2, Plus, Trash2, FileText, Send } from "lucide-react";
 import { Link } from "wouter";
 import { parseFormattedNumber, formatCurrency } from "@/lib/format";
-import { generateOrderPDF } from "@/lib/pdf-generator";
+import { generateOrderPDF, shareOrderPDFViaWhatsApp } from "@/lib/pdf-generator";
 
 const orderItemSchema = z.object({
   especie: z.string().min(1, "Obrigatório"),
@@ -223,14 +223,24 @@ export default function PedidoForm() {
     }
   };
 
-  const handleWhatsApp = (orderData: any) => {
+  const handleWhatsApp = async (orderData: any) => {
     if (!orderData) return;
-    
+
     const comp = customers?.find(c => c.id === orderData.compradorId);
     const vend = customers?.find(c => c.id === orderData.vendedorId);
-    
-    const text = encodeURIComponent(`*PEDIDO DE COMPRA DE BOVINOS - EP BOV*\n\nPedido N°: ${orderData.numero}\nData: ${orderData.dataEmissao ? new Date(orderData.dataEmissao).toLocaleDateString('pt-BR') : new Date().toLocaleDateString('pt-BR')}\nComprador: ${comp?.nome || '-'}\nVendedor: ${vend?.nome || '-'}\nTotal Animais: ${orderData.totalAnimais}\nValor Total: ${formatCurrency(orderData.totalValor)}\n\nObrigado pela preferência!`);
-    window.open(`https://wa.me/?text=${text}`, '_blank');
+
+    try {
+      const result = await shareOrderPDFViaWhatsApp(orderData, comp, vend);
+      if (result === "downloaded-fallback") {
+        toast({
+          title: "PDF baixado",
+          description: "Anexe o arquivo PDF baixado na conversa do WhatsApp.",
+        });
+      }
+    } catch (e) {
+      toast({ title: "Erro ao compartilhar pelo WhatsApp", variant: "destructive" });
+      console.error(e);
+    }
   };
 
   const isSaving = createOrder.isPending || updateOrder.isPending;
