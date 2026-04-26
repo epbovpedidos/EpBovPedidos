@@ -1,0 +1,348 @@
+```txt
+Crie um aplicativo web completo, moderno e responsivo chamado **EP Bov Pedidos**, voltado para emissão de pedidos de venda de bovinos, funcionando em desktop e mobile.
+
+### TECNOLOGIAS SUGERIDAS
+Use:
+- Frontend: React + Tailwind CSS
+- Backend: Node.js + Express
+- Banco de Dados: PostgreSQL ou Supabase
+- Geração de PDF: jsPDF ou pdfmake
+- Login seguro com autenticação
+- Deploy pronto para web/mobile responsivo
+
+--------------------------------------------------
+### IDENTIDADE VISUAL
+- Layout limpo, profissional e intuitivo
+- Tons de verde pastel nos cabeçalhos
+- Cartões modernos
+- Interface rápida
+- Espaço no topo esquerdo para inserir logomarca personalizada do cliente
+
+--------------------------------------------------
+### TELA DE LOGIN
+Criar tela inicial com:
+- Campo Login
+- Campo Senha
+- Botão Entrar
+- Layout moderno
+- Sessão segura
+
+--------------------------------------------------
+### DASHBOARD INICIAL (após login)
+Mostrar cards e gráficos com:
+
+1. Total de pedidos emitidos
+2. Total de animais vendidos
+3. Volume vendido por comprador
+4. Volume vendido por espécie
+5. Volume vendido por raça
+6. Volume vendido por faixa etária
+7. Valor financeiro total negociado
+8. Últimos pedidos emitidos
+
+--------------------------------------------------
+### MENU LATERAL
+Criar menu com:
+
+- Dashboard
+- Novo Pedido
+- Histórico de Pedidos
+- Cadastro de Clientes
+- Relatórios
+- Configurações
+
+--------------------------------------------------
+## MÓDULO NOVO PEDIDO
+
+Criar formulário completo dividido em etapas:
+
+==================================================
+1. CABEÇALHO DO PEDIDO
+==================================================
+
+Lado esquerdo:
+- Logo da empresa
+- EP COMERCIO DE BOVINOS
+- CNPJ: 63.078.738/0001-91
+- Telefone: (66) 99631-9292
+- Endereço: Al. Das Rosas, 2500, Vila Aurora – Rondonópolis-MT
+
+Lado direito:
+- Data de emissão automática
+- Número do pedido automático sequencial
+(exemplo: 0001, 0002, 0003...)
+
+==================================================
+2. CRONOGRAMA
+==================================================
+
+Campos de data:
+
+- Data de Embarque
+- Data de Desembarque
+- Data de Abate
+
+Formato dd/mm/aaaa
+
+==================================================
+3. PEDIDO DE COMPRA
+==================================================
+
+Dividir em 2 colunas:
+
+### COLUNA ESQUERDA - COMPRADOR
+
+Lista suspensa com clientes cadastrados.
+
+Ao selecionar, preencher automaticamente:
+
+- Nome
+- Fazenda
+- CPF/CNPJ
+- Inscrição
+- Endereço
+- Município/UF
+
+### COLUNA DIREITA - VENDEDOR
+
+Lista suspensa com clientes cadastrados.
+
+Ao selecionar, preencher automaticamente:
+
+- Nome
+- Fazenda
+- CPF/CNPJ
+- Inscrição
+- Endereço
+- Município/UF
+
+==================================================
+4. ROTEIRO
+==================================================
+
+Campo automático puxando o roteiro cadastrado do vendedor selecionado.
+
+==================================================
+5. TABELA DE PREÇOS
+==================================================
+
+Criar tabela dinâmica com múltiplas linhas.
+
+Colunas:
+
+1. Espécie (dropdown):
+- Boi para Abate
+- Vaca para Abate
+- Novilha para Abate
+- Bezerros
+- Bezerras
+- Novilha
+- Garrote
+- Vacas
+- Touro
+
+2. Raça:
+- Nelore
+- Angus
+- Anelorado
+- Cruzado
+
+3. Idade:
+- 0 a 4
+- 5 a 12
+- 13 a 24
+- 25 a 36
+- +36
+
+4. Quantidade
+5. Peso (arrobas)
+6. Preço por arroba
+7. Total automático
+8. Rastreabilidade (checkbox Sim/Não)
+
+Permitir adicionar várias linhas.
+
+Calcular automaticamente:
+- Quantidade total
+- Peso total
+- Valor total geral
+
+==================================================
+6. CONDIÇÕES DE PAGAMENTO
+==================================================
+
+Campo Forma de Pagamento:
+
+Dropdown:
+- À VISTA
+- A PRAZO
+
+Se selecionar A PRAZO, abrir novo campo:
+
+Dropdown:
+- 7 dias
+- 15 dias
+- 30 dias
+- 45 dias
+- 60 dias
+- 30/60/90 dias
+
+Abaixo mostrar automaticamente dados bancários do vendedor:
+
+- Banco
+- Conta
+- Agência
+- Titular
+
+==================================================
+7. OBSERVAÇÃO
+==================================================
+
+Área grande de texto livre.
+
+==================================================
+8. DATA DA COMPRA
+==================================================
+
+Campo de data.
+
+==================================================
+9. ASSINATURAS
+==================================================
+
+Duas colunas:
+
+Esquerda:
+Campo nome Comprador
+Linha assinatura
+
+Direita:
+Campo nome Fornecedor
+Linha assinatura
+
+--------------------------------------------------
+### BOTÕES FINAIS
+
+- Emitir Pedido
+- Salvar Rascunho
+- Limpar Campos
+- Gerar PDF
+- Enviar WhatsApp
+
+--------------------------------------------------
+### AO CLICAR EM EMITIR PEDIDO
+
+1. Salvar no banco de dados
+2. Gerar PDF automático
+3. Mostrar visualização do PDF
+4. Botão baixar PDF
+5. Botão enviar WhatsApp
+
+Nome do arquivo:
+
+NUMEROPEDIDO_NOMECOMPRADOR.pdf
+
+Exemplo:
+0007_FAZENDABOAVISTA.pdf
+
+--------------------------------------------------
+### HISTÓRICO DE PEDIDOS
+
+Tabela com:
+
+- Nº Pedido
+- Data
+- Comprador
+- Vendedor
+- Quantidade
+- Valor
+- Status
+
+Botões:
+
+- Visualizar
+- Editar
+- Gerar PDF
+- Enviar WhatsApp
+- Excluir
+
+Filtros por:
+- Data
+- Cliente
+- Cidade
+- Status
+
+--------------------------------------------------
+### CADASTRO DE CLIENTES
+
+Criar formulário com:
+
+- Nome
+- Fazenda
+- CPF/CNPJ
+- Inscrição
+- Endereço
+- UF (lista estados Brasil)
+- Município
+
+Ao selecionar UF:
+carregar cidades do estado automaticamente
+
+Também permitir digitação manual da cidade.
+
+Mais campos:
+
+- Telefone
+- Email
+- Roteiro
+- Banco
+- Conta
+- Agência
+- Titular
+
+Botões:
+
+- Salvar
+- Editar
+- Excluir
+
+--------------------------------------------------
+### RELATÓRIOS (SUGESTÃO EXTRA)
+
+Criar relatórios com:
+
+- Vendas por período
+- Compradores que mais compram
+- Ranking vendedores
+- Volume por raça
+- Volume por espécie
+- Exportar Excel / PDF
+
+--------------------------------------------------
+### CONFIGURAÇÕES (SUGESTÃO EXTRA)
+
+Permitir:
+
+- Alterar logomarca
+- Alterar cor do sistema
+- Backup banco de dados
+- Cadastro usuários
+- Trocar senha
+
+--------------------------------------------------
+### MOBILE
+
+Deixar totalmente responsivo para celular.
+
+--------------------------------------------------
+### IMPORTANTE
+
+Criar código limpo, profissional, escalável e pronto para crescer futuramente.
+
+Criar banco de dados estruturado.
+
+Criar interface bonita.
+
+Criar sistema funcional real.
+
+```

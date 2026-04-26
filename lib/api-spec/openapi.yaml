@@ -1,22 +1,28 @@
 openapi: 3.1.0
 info:
-  # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: EP Bov Pedidos API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: customers
+    description: Customer (cliente) operations
+  - name: orders
+    description: Order (pedido) operations
+  - name: dashboard
+    description: Dashboard summary operations
+  - name: reports
+    description: Report operations
 paths:
   /healthz:
     get:
       operationId: healthCheck
       tags: [health]
       summary: Health check
-      description: Returns server health status
       responses:
         "200":
           description: Healthy
@@ -24,6 +30,328 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /customers:
+    get:
+      operationId: listCustomers
+      tags: [customers]
+      summary: List all customers
+      responses:
+        "200":
+          description: Customer list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Customer"
+    post:
+      operationId: createCustomer
+      tags: [customers]
+      summary: Create customer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomerInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Customer"
+  /customers/{id}:
+    get:
+      operationId: getCustomer
+      tags: [customers]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Customer
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Customer"
+    patch:
+      operationId: updateCustomer
+      tags: [customers]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomerInput"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Customer"
+    delete:
+      operationId: deleteCustomer
+      tags: [customers]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+
+  /orders:
+    get:
+      operationId: listOrders
+      tags: [orders]
+      summary: List all orders
+      parameters:
+        - name: status
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: customerId
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: from
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: to
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Order list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/OrderSummary"
+    post:
+      operationId: createOrder
+      tags: [orders]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OrderInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+  /orders/{id}:
+    get:
+      operationId: getOrder
+      tags: [orders]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Order
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+    patch:
+      operationId: updateOrder
+      tags: [orders]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OrderInput"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+    delete:
+      operationId: deleteOrder
+      tags: [orders]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+  /orders/{id}/issue:
+    post:
+      operationId: issueOrder
+      tags: [orders]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Issued
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+
+  /dashboard/summary:
+    get:
+      operationId: getDashboardSummary
+      tags: [dashboard]
+      summary: Dashboard totals
+      responses:
+        "200":
+          description: Summary
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DashboardSummary"
+  /dashboard/by-buyer:
+    get:
+      operationId: getVolumeByBuyer
+      tags: [dashboard]
+      responses:
+        "200":
+          description: Volume per buyer
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GroupBucket"
+  /dashboard/by-species:
+    get:
+      operationId: getVolumeBySpecies
+      tags: [dashboard]
+      responses:
+        "200":
+          description: Volume per species
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GroupBucket"
+  /dashboard/by-breed:
+    get:
+      operationId: getVolumeByBreed
+      tags: [dashboard]
+      responses:
+        "200":
+          description: Volume per breed
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GroupBucket"
+  /dashboard/by-age-range:
+    get:
+      operationId: getVolumeByAgeRange
+      tags: [dashboard]
+      responses:
+        "200":
+          description: Volume per age range
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GroupBucket"
+  /dashboard/recent-orders:
+    get:
+      operationId: getRecentOrders
+      tags: [dashboard]
+      responses:
+        "200":
+          description: Recent orders
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/OrderSummary"
+  /dashboard/monthly-sales:
+    get:
+      operationId: getMonthlySales
+      tags: [dashboard]
+      responses:
+        "200":
+          description: Monthly sales totals
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MonthlyBucket"
+
+  /reports/top-buyers:
+    get:
+      operationId: getTopBuyers
+      tags: [reports]
+      responses:
+        "200":
+          description: Top buyers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/RankingEntry"
+  /reports/top-sellers:
+    get:
+      operationId: getTopSellers
+      tags: [reports]
+      responses:
+        "200":
+          description: Top sellers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/RankingEntry"
+
 components:
   schemas:
     HealthStatus:
@@ -31,6 +359,237 @@ components:
       properties:
         status:
           type: string
-      required:
-        - status
+      required: [status]
 
+    CustomerInput:
+      type: object
+      properties:
+        nome:
+          type: string
+        fazenda:
+          type: ["string", "null"]
+        cpfCnpj:
+          type: ["string", "null"]
+        inscricao:
+          type: ["string", "null"]
+        endereco:
+          type: ["string", "null"]
+        uf:
+          type: ["string", "null"]
+        municipio:
+          type: ["string", "null"]
+        telefone:
+          type: ["string", "null"]
+        email:
+          type: ["string", "null"]
+        roteiro:
+          type: ["string", "null"]
+        banco:
+          type: ["string", "null"]
+        conta:
+          type: ["string", "null"]
+        agencia:
+          type: ["string", "null"]
+        titular:
+          type: ["string", "null"]
+      required: [nome]
+    Customer:
+      allOf:
+        - $ref: "#/components/schemas/CustomerInput"
+        - type: object
+          properties:
+            id:
+              type: integer
+            createdAt:
+              type: string
+              format: date-time
+          required: [id, createdAt]
+
+    OrderItemInput:
+      type: object
+      properties:
+        especie:
+          type: string
+        raca:
+          type: string
+        idade:
+          type: string
+        quantidade:
+          type: integer
+        peso:
+          type: number
+        precoArroba:
+          type: number
+        rastreabilidade:
+          type: boolean
+      required: [especie, raca, idade, quantidade, peso, precoArroba, rastreabilidade]
+
+    OrderItem:
+      allOf:
+        - $ref: "#/components/schemas/OrderItemInput"
+        - type: object
+          properties:
+            id:
+              type: integer
+            total:
+              type: number
+          required: [id, total]
+
+    OrderInput:
+      type: object
+      properties:
+        compradorId:
+          type: integer
+        vendedorId:
+          type: integer
+        dataEmbarque:
+          type: ["string", "null"]
+        dataDesembarque:
+          type: ["string", "null"]
+        dataAbate:
+          type: ["string", "null"]
+        roteiro:
+          type: ["string", "null"]
+        formaPagamento:
+          type: string
+        prazoPagamento:
+          type: ["string", "null"]
+        observacao:
+          type: ["string", "null"]
+        dataCompra:
+          type: ["string", "null"]
+        status:
+          type: ["string", "null"]
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/OrderItemInput"
+      required: [compradorId, vendedorId, formaPagamento, items]
+
+    Order:
+      type: object
+      properties:
+        id:
+          type: integer
+        numero:
+          type: string
+        dataEmissao:
+          type: string
+          format: date-time
+        compradorId:
+          type: integer
+        vendedorId:
+          type: integer
+        comprador:
+          $ref: "#/components/schemas/Customer"
+        vendedor:
+          $ref: "#/components/schemas/Customer"
+        dataEmbarque:
+          type: ["string", "null"]
+        dataDesembarque:
+          type: ["string", "null"]
+        dataAbate:
+          type: ["string", "null"]
+        roteiro:
+          type: ["string", "null"]
+        formaPagamento:
+          type: string
+        prazoPagamento:
+          type: ["string", "null"]
+        observacao:
+          type: ["string", "null"]
+        dataCompra:
+          type: ["string", "null"]
+        status:
+          type: string
+        totalAnimais:
+          type: integer
+        totalPeso:
+          type: number
+        totalValor:
+          type: number
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/OrderItem"
+      required: [id, numero, dataEmissao, compradorId, vendedorId, formaPagamento, status, totalAnimais, totalPeso, totalValor, items]
+
+    OrderSummary:
+      type: object
+      properties:
+        id:
+          type: integer
+        numero:
+          type: string
+        dataEmissao:
+          type: string
+          format: date-time
+        compradorNome:
+          type: string
+        vendedorNome:
+          type: string
+        municipio:
+          type: ["string", "null"]
+        totalAnimais:
+          type: integer
+        totalValor:
+          type: number
+        status:
+          type: string
+      required: [id, numero, dataEmissao, compradorNome, vendedorNome, totalAnimais, totalValor, status]
+
+    DashboardSummary:
+      type: object
+      properties:
+        totalPedidos:
+          type: integer
+        totalAnimais:
+          type: integer
+        totalValor:
+          type: number
+        totalCompradores:
+          type: integer
+        totalVendedores:
+          type: integer
+        pedidosMes:
+          type: integer
+        valorMes:
+          type: number
+      required: [totalPedidos, totalAnimais, totalValor, totalCompradores, totalVendedores, pedidosMes, valorMes]
+
+    GroupBucket:
+      type: object
+      properties:
+        label:
+          type: string
+        animais:
+          type: integer
+        valor:
+          type: number
+      required: [label, animais, valor]
+
+    MonthlyBucket:
+      type: object
+      properties:
+        month:
+          type: string
+        pedidos:
+          type: integer
+        animais:
+          type: integer
+        valor:
+          type: number
+      required: [month, pedidos, animais, valor]
+
+    RankingEntry:
+      type: object
+      properties:
+        nome:
+          type: string
+        pedidos:
+          type: integer
+        animais:
+          type: integer
+        valor:
+          type: number
+      required: [nome, pedidos, animais, valor]

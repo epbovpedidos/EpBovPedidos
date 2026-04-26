@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "EP Bov Pedidos"
+version = "1.0.0"
+id = "artifacts/ep-bov-pedidos"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23163
+
+[services.development]
+run = "pnpm --filter @workspace/ep-bov-pedidos run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/ep-bov-pedidos", "run", "build" ]
+publicDir = "artifacts/ep-bov-pedidos/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23163"
+BASE_PATH = "/"
