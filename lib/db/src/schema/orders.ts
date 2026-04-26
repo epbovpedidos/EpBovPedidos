@@ -27,6 +27,8 @@ export const ordersTable = pgTable("orders", {
   prazoPagamento: text("prazo_pagamento"),
   observacao: text("observacao"),
   dataCompra: text("data_compra"),
+  assinaturaComprador: text("assinatura_comprador"),
+  assinaturaVendedor: text("assinatura_vendedor"),
   status: text("status").notNull().default("emitido"),
   totalAnimais: integer("total_animais").notNull().default(0),
   totalPeso: numeric("total_peso", { precision: 14, scale: 2 }).notNull().default("0"),

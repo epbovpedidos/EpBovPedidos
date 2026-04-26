@@ -173,6 +173,8 @@ export const CreateOrderBody = zod.object({
   prazoPagamento: zod.string().nullish(),
   observacao: zod.string().nullish(),
   dataCompra: zod.string().nullish(),
+  assinaturaComprador: zod.string().nullish(),
+  assinaturaVendedor: zod.string().nullish(),
   status: zod.string().nullish(),
   items: zod.array(
     zod.object({
@@ -253,6 +255,8 @@ export const GetOrderResponse = zod.object({
   prazoPagamento: zod.string().nullish(),
   observacao: zod.string().nullish(),
   dataCompra: zod.string().nullish(),
+  assinaturaComprador: zod.string().nullish(),
+  assinaturaVendedor: zod.string().nullish(),
   status: zod.string(),
   totalAnimais: zod.number(),
   totalPeso: zod.number(),
@@ -292,6 +296,8 @@ export const UpdateOrderBody = zod.object({
   prazoPagamento: zod.string().nullish(),
   observacao: zod.string().nullish(),
   dataCompra: zod.string().nullish(),
+  assinaturaComprador: zod.string().nullish(),
+  assinaturaVendedor: zod.string().nullish(),
   status: zod.string().nullish(),
   items: zod.array(
     zod.object({
@@ -368,6 +374,8 @@ export const UpdateOrderResponse = zod.object({
   prazoPagamento: zod.string().nullish(),
   observacao: zod.string().nullish(),
   dataCompra: zod.string().nullish(),
+  assinaturaComprador: zod.string().nullish(),
+  assinaturaVendedor: zod.string().nullish(),
   status: zod.string(),
   totalAnimais: zod.number(),
   totalPeso: zod.number(),
@@ -462,6 +470,8 @@ export const IssueOrderResponse = zod.object({
   prazoPagamento: zod.string().nullish(),
   observacao: zod.string().nullish(),
   dataCompra: zod.string().nullish(),
+  assinaturaComprador: zod.string().nullish(),
+  assinaturaVendedor: zod.string().nullish(),
   status: zod.string(),
   totalAnimais: zod.number(),
   totalPeso: zod.number(),

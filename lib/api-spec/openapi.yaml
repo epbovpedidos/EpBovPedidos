@@ -458,6 +458,10 @@ components:
           type: ["string", "null"]
         dataCompra:
           type: ["string", "null"]
+        assinaturaComprador:
+          type: ["string", "null"]
+        assinaturaVendedor:
+          type: ["string", "null"]
         status:
           type: ["string", "null"]
         items:
@@ -499,6 +503,10 @@ components:
         observacao:
           type: ["string", "null"]
         dataCompra:
+          type: ["string", "null"]
+        assinaturaComprador:
+          type: ["string", "null"]
+        assinaturaVendedor:
           type: ["string", "null"]
         status:
           type: string

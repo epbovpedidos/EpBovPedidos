@@ -78,6 +78,10 @@ export interface OrderInput {
   /** @nullable */
   dataCompra?: string | null;
   /** @nullable */
+  assinaturaComprador?: string | null;
+  /** @nullable */
+  assinaturaVendedor?: string | null;
+  /** @nullable */
   status?: string | null;
   items: OrderItemInput[];
 }
@@ -105,6 +109,10 @@ export interface Order {
   observacao?: string | null;
   /** @nullable */
   dataCompra?: string | null;
+  /** @nullable */
+  assinaturaComprador?: string | null;
+  /** @nullable */
+  assinaturaVendedor?: string | null;
   status: string;
   totalAnimais: number;
   totalPeso: number;

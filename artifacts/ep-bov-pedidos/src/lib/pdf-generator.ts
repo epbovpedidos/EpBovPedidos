@@ -175,6 +175,14 @@ export function generateOrderPDF(order: Order, comprador?: Customer, vendedor?: 
 
   doc.setFont("helvetica", "normal");
   doc.setFontSize(10);
+
+  if (order.assinaturaComprador) {
+    doc.text(order.assinaturaComprador, pageWidth / 4, currentY - 2, { align: "center" });
+  }
+  if (order.assinaturaVendedor) {
+    doc.text(order.assinaturaVendedor, (pageWidth / 4) * 3, currentY - 2, { align: "center" });
+  }
+
   doc.line(20, currentY, (pageWidth / 2) - 10, currentY);
   doc.line((pageWidth / 2) + 10, currentY, pageWidth - 20, currentY);
 

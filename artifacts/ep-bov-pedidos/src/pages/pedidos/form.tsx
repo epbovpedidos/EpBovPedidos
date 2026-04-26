@@ -48,6 +48,8 @@ const orderSchema = z.object({
   prazoPagamento: z.string().nullable().optional(),
   observacao: z.string().nullable().optional(),
   dataCompra: z.string().nullable().optional(),
+  assinaturaComprador: z.string().nullable().optional(),
+  assinaturaVendedor: z.string().nullable().optional(),
   items: z.array(orderItemSchema).min(1, "Adicione pelo menos um item"),
 });
 
@@ -95,6 +97,8 @@ export default function PedidoForm() {
       prazoPagamento: "",
       observacao: "",
       dataCompra: new Date().toISOString().split('T')[0],
+      assinaturaComprador: "",
+      assinaturaVendedor: "",
       items: [{
         especie: "",
         raca: "",
@@ -133,6 +137,8 @@ export default function PedidoForm() {
         prazoPagamento: order.prazoPagamento || "",
         observacao: order.observacao || "",
         dataCompra: order.dataCompra ? order.dataCompra.split('T')[0] : "",
+        assinaturaComprador: order.assinaturaComprador || "",
+        assinaturaVendedor: order.assinaturaVendedor || "",
         items: order.items.map(i => ({
           especie: i.especie,
           raca: i.raca,
@@ -812,19 +818,73 @@ export default function PedidoForm() {
             </CardContent>
           </Card>
 
-          {/* Assinaturas Preview */}
-          <div className="flex flex-col sm:flex-row justify-around gap-12 py-12 px-6 bg-card rounded-lg border border-dashed opacity-50">
-            <div className="text-center w-full max-w-[300px] mx-auto">
-              <div className="border-b border-foreground mb-2"></div>
-              <div className="font-medium text-sm">{compradorSelecionado?.nome || "COMPRADOR"}</div>
-              <div className="text-xs text-muted-foreground">Comprador</div>
-            </div>
-            <div className="text-center w-full max-w-[300px] mx-auto">
-              <div className="border-b border-foreground mb-2"></div>
-              <div className="font-medium text-sm">{vendedorSelecionado?.nome || "VENDEDOR"}</div>
-              <div className="text-xs text-muted-foreground">Fornecedor</div>
-            </div>
-          </div>
+          {/* Assinaturas */}
+          <Card>
+            <CardHeader className="pb-3 border-b mb-4">
+              <CardTitle className="text-lg">Assinaturas</CardTitle>
+              <p className="text-sm text-muted-foreground">
+                Digite manualmente o nome de quem assina como Comprador e como Vendedor.
+                Esses nomes aparecerão impressos acima da linha no PDF, independente do cadastro.
+              </p>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                <div className="space-y-2">
+                  <FormField
+                    control={form.control}
+                    name="assinaturaComprador"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Nome para assinatura - Comprador</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            value={field.value || ""}
+                            placeholder="Digite o nome de quem irá assinar"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <div className="text-center pt-6">
+                    <div className="font-medium text-sm min-h-[20px]">
+                      {form.watch("assinaturaComprador") || ""}
+                    </div>
+                    <div className="border-b border-foreground my-1"></div>
+                    <div className="text-xs text-muted-foreground">Comprador</div>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <FormField
+                    control={form.control}
+                    name="assinaturaVendedor"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Nome para assinatura - Vendedor</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            value={field.value || ""}
+                            placeholder="Digite o nome de quem irá assinar"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <div className="text-center pt-6">
+                    <div className="font-medium text-sm min-h-[20px]">
+                      {form.watch("assinaturaVendedor") || ""}
+                    </div>
+                    <div className="border-b border-foreground my-1"></div>
+                    <div className="text-xs text-muted-foreground">Vendedor</div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
 
           {/* Action Buttons Floating Bar */}
           <div className="fixed bottom-0 left-0 right-0 md:left-64 bg-card border-t p-4 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] flex flex-col sm:flex-row justify-between items-center gap-4 z-10">

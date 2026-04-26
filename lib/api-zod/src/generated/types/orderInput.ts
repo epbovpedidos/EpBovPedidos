@@ -26,6 +26,10 @@ export interface OrderInput {
   /** @nullable */
   dataCompra?: string | null;
   /** @nullable */
+  assinaturaComprador?: string | null;
+  /** @nullable */
+  assinaturaVendedor?: string | null;
+  /** @nullable */
   status?: string | null;
   items: OrderItemInput[];
 }

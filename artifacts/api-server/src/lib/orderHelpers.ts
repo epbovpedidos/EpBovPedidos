@@ -73,6 +73,8 @@ export async function loadFullOrder(id: number) {
     prazoPagamento: order.prazoPagamento,
     observacao: order.observacao,
     dataCompra: order.dataCompra,
+    assinaturaComprador: order.assinaturaComprador,
+    assinaturaVendedor: order.assinaturaVendedor,
     status: order.status,
     totalAnimais: order.totalAnimais,
     totalPeso: Number(order.totalPeso),
