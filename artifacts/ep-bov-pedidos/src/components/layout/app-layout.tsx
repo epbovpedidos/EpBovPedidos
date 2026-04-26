@@ -54,18 +54,18 @@ function SidebarContent() {
         {navItems.map((item) => {
           const isActive = location === item.href || (location.startsWith(item.href) && item.href !== "/dashboard");
           return (
-            <Link key={item.href} href={item.href}>
-              <a
-                className={cn(
-                  "flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-colors",
-                  isActive
-                    ? "bg-sidebar-accent text-sidebar-accent-foreground"
-                    : "text-sidebar-foreground/80 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"
-                )}
-              >
-                <item.icon className={cn("h-5 w-5", isActive ? "text-primary" : "text-muted-foreground")} />
-                {item.label}
-              </a>
+            <Link
+              key={item.href}
+              href={item.href}
+              className={cn(
+                "flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium transition-colors",
+                isActive
+                  ? "bg-sidebar-accent text-sidebar-accent-foreground"
+                  : "text-sidebar-foreground/80 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"
+              )}
+            >
+              <item.icon className={cn("h-5 w-5", isActive ? "text-primary" : "text-muted-foreground")} />
+              {item.label}
             </Link>
           );
         })}

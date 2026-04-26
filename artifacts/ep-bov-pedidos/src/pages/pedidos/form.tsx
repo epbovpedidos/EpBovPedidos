@@ -556,10 +556,12 @@ export default function PedidoForm() {
                             control={form.control}
                             name={`items.${index}.especie`}
                             render={({ field }) => (
-                              <Select onValueChange={field.onChange} value={field.value}>
-                                <FormControl><SelectTrigger className="h-9"><SelectValue placeholder="Espécie" /></SelectTrigger></FormControl>
-                                <SelectContent>{ESPECIES.map(e => <SelectItem key={e} value={e}>{e}</SelectItem>)}</SelectContent>
-                              </Select>
+                              <FormItem>
+                                <Select onValueChange={field.onChange} value={field.value}>
+                                  <FormControl><SelectTrigger className="h-9"><SelectValue placeholder="Espécie" /></SelectTrigger></FormControl>
+                                  <SelectContent>{ESPECIES.map(e => <SelectItem key={e} value={e}>{e}</SelectItem>)}</SelectContent>
+                                </Select>
+                              </FormItem>
                             )}
                           />
                         </TableCell>
@@ -568,10 +570,12 @@ export default function PedidoForm() {
                             control={form.control}
                             name={`items.${index}.raca`}
                             render={({ field }) => (
-                              <Select onValueChange={field.onChange} value={field.value}>
-                                <FormControl><SelectTrigger className="h-9"><SelectValue placeholder="Raça" /></SelectTrigger></FormControl>
-                                <SelectContent>{RACAS.map(r => <SelectItem key={r} value={r}>{r}</SelectItem>)}</SelectContent>
-                              </Select>
+                              <FormItem>
+                                <Select onValueChange={field.onChange} value={field.value}>
+                                  <FormControl><SelectTrigger className="h-9"><SelectValue placeholder="Raça" /></SelectTrigger></FormControl>
+                                  <SelectContent>{RACAS.map(r => <SelectItem key={r} value={r}>{r}</SelectItem>)}</SelectContent>
+                                </Select>
+                              </FormItem>
                             )}
                           />
                         </TableCell>
@@ -580,10 +584,12 @@ export default function PedidoForm() {
                             control={form.control}
                             name={`items.${index}.idade`}
                             render={({ field }) => (
-                              <Select onValueChange={field.onChange} value={field.value}>
-                                <FormControl><SelectTrigger className="h-9"><SelectValue placeholder="Idade" /></SelectTrigger></FormControl>
-                                <SelectContent>{IDADES.map(i => <SelectItem key={i} value={i}>{i}</SelectItem>)}</SelectContent>
-                              </Select>
+                              <FormItem>
+                                <Select onValueChange={field.onChange} value={field.value}>
+                                  <FormControl><SelectTrigger className="h-9"><SelectValue placeholder="Idade" /></SelectTrigger></FormControl>
+                                  <SelectContent>{IDADES.map(i => <SelectItem key={i} value={i}>{i}</SelectItem>)}</SelectContent>
+                                </Select>
+                              </FormItem>
                             )}
                           />
                         </TableCell>
@@ -592,12 +598,14 @@ export default function PedidoForm() {
                             control={form.control}
                             name={`items.${index}.quantidade`}
                             render={({ field }) => (
-                              <FormControl>
-                                <Input type="text" className="h-9 text-right" 
-                                  value={field.value || ""} 
-                                  onChange={e => field.onChange(parseFormattedNumber(e.target.value))} 
-                                />
-                              </FormControl>
+                              <FormItem>
+                                <FormControl>
+                                  <Input type="text" className="h-9 text-right" 
+                                    value={field.value || ""} 
+                                    onChange={e => field.onChange(parseFormattedNumber(e.target.value))} 
+                                  />
+                                </FormControl>
+                              </FormItem>
                             )}
                           />
                         </TableCell>
@@ -606,12 +614,14 @@ export default function PedidoForm() {
                             control={form.control}
                             name={`items.${index}.peso`}
                             render={({ field }) => (
-                              <FormControl>
-                                <Input type="text" className="h-9 text-right" 
-                                  value={field.value || ""} 
-                                  onChange={e => field.onChange(parseFormattedNumber(e.target.value))} 
-                                />
-                              </FormControl>
+                              <FormItem>
+                                <FormControl>
+                                  <Input type="text" className="h-9 text-right" 
+                                    value={field.value || ""} 
+                                    onChange={e => field.onChange(parseFormattedNumber(e.target.value))} 
+                                  />
+                                </FormControl>
+                              </FormItem>
                             )}
                           />
                         </TableCell>
@@ -620,12 +630,14 @@ export default function PedidoForm() {
                             control={form.control}
                             name={`items.${index}.precoArroba`}
                             render={({ field }) => (
-                              <FormControl>
-                                <Input type="text" className="h-9 text-right" 
-                                  value={field.value || ""} 
-                                  onChange={e => field.onChange(parseFormattedNumber(e.target.value))} 
-                                />
-                              </FormControl>
+                              <FormItem>
+                                <FormControl>
+                                  <Input type="text" className="h-9 text-right" 
+                                    value={field.value || ""} 
+                                    onChange={e => field.onChange(parseFormattedNumber(e.target.value))} 
+                                  />
+                                </FormControl>
+                              </FormItem>
                             )}
                           />
                         </TableCell>
@@ -637,9 +649,11 @@ export default function PedidoForm() {
                             control={form.control}
                             name={`items.${index}.rastreabilidade`}
                             render={({ field }) => (
-                              <FormControl>
-                                <Checkbox checked={field.value} onCheckedChange={field.onChange} />
-                              </FormControl>
+                              <FormItem>
+                                <FormControl>
+                                  <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                                </FormControl>
+                              </FormItem>
                             )}
                           />
                         </TableCell>
