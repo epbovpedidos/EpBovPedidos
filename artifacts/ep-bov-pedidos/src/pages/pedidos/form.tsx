@@ -55,7 +55,7 @@ const orderSchema = z.object({
 
 type OrderFormValues = z.infer<typeof orderSchema>;
 
-const ESPECIES = ["Boi para Abate", "Vaca para Abate", "Novilha para Abate", "Bezerros", "Bezerras", "Novilha", "Garrote", "Vacas", "Touro"];
+const ESPECIES = ["Boi para Abate", "Vaca para Abate", "Vaca Parida", "Novilha para Abate", "Bezerros", "Bezerras", "Novilha", "Garrote", "Vacas", "Touro"];
 const RACAS = ["Nelore", "Angus", "Anelorado", "Cruzado"];
 const IDADES = ["0 a 4", "5 a 12", "13 a 24", "25 a 36", "+36"];
 const FORMAS_PAGAMENTO = ["À VISTA", "A PRAZO"];
@@ -632,7 +632,7 @@ export default function PedidoForm() {
                             render={({ field }) => (
                               <FormItem>
                                 <FormControl>
-                                  <Input type="text" className="h-9 text-right" 
+                                  <Input type="number" step="0.01" min="0" className="h-9 text-right" 
                                     value={field.value || ""} 
                                     onChange={e => field.onChange(parseFormattedNumber(e.target.value))} 
                                   />
@@ -648,7 +648,7 @@ export default function PedidoForm() {
                             render={({ field }) => (
                               <FormItem>
                                 <FormControl>
-                                  <Input type="text" className="h-9 text-right" 
+                                  <Input type="number" step="0.01" min="0" className="h-9 text-right" 
                                     value={field.value || ""} 
                                     onChange={e => field.onChange(parseFormattedNumber(e.target.value))} 
                                   />
@@ -885,6 +885,11 @@ export default function PedidoForm() {
               </div>
             </CardContent>
           </Card>
+
+          {/* Aviso abaixo das assinaturas */}
+          <p className="text-xs text-muted-foreground italic text-center px-4">
+            *Os valores em peso e em reais apresentados neste documento, são valores médios aproximados.
+          </p>
 
           {/* Action Buttons Floating Bar */}
           <div className="fixed bottom-0 left-0 right-0 md:left-64 bg-card border-t p-4 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] flex flex-col sm:flex-row justify-between items-center gap-4 z-10">

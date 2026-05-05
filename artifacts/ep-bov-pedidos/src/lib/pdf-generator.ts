@@ -189,6 +189,15 @@ export function generateOrderPDF(order: Order, comprador?: Customer, vendedor?: 
   doc.text("Comprador", pageWidth / 4, currentY + 6, { align: "center" });
   doc.text("Vendedor", (pageWidth / 4) * 3, currentY + 6, { align: "center" });
 
+  doc.setFontSize(8);
+  doc.setFont("helvetica", "italic");
+  doc.text(
+    "*Os valores em peso e em reais apresentados neste documento, são valores médios aproximados.",
+    pageWidth / 2,
+    currentY + 18,
+    { align: "center" }
+  );
+
   const fileName = `${order.numero}_${comprador?.nome?.toUpperCase().replace(/\s+/g, '') || 'PEDIDO'}.pdf`;
 
   return {
